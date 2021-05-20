@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace PaymentExchange.Business.Notifications
 {
-    class Notification
+    public class Notification
     {
+        public Notification(string message)
+        {
+            Message = message;
+        }
+
+        public string Message { get; }
     }
 }
