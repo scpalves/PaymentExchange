@@ -20,4 +20,6 @@ namespace PaymentExchange.Business.Models
         public virtual ICollection<InvoiceLine> InvoiceLines { get; set; }
 
     }
+
+
 }

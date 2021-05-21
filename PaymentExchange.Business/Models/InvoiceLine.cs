@@ -13,6 +13,5 @@ namespace PaymentExchange.Business.Models
 
         public decimal ClientDeduction { get; set; }
         public int QuantityDeduction { get; set; }
-        public virtual Invoice Invoice { get; set; }
     }
 }

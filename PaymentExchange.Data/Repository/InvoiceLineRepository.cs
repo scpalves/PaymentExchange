@@ -18,13 +18,13 @@ namespace PaymentExchange.Data.Repository
 
         public async Task<InvoiceLine> GetInvoiceLineById(Guid id)
         {
-            return await Db.InvoiceLines.AsNoTracking().Include(f => f.Invoice)
+            return await Db.InvoiceLines.AsNoTracking().Include(f => f.InvoiceLineId)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IEnumerable<InvoiceLine>> GetInvoiceLines()
         {
-            return await Db.InvoiceLines.AsNoTracking().Include(f => f.Invoice)
+            return await Db.InvoiceLines.AsNoTracking().Include(f => f.InvoiceLineId)
                 .OrderBy(p => p.Id).ToListAsync();
         }
 

@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace PaymentExchange.Business.Models.Enums
 {
-    public enum InvoiceLineType
+
+    public static class InvoiceLineType
     {
-        Dez = 10,
-        Vinte = 20,
-        Ciquenta = 50,
-        Cem = 100,
-        //Um = 0.01,
-
-
-    }
+        public const double DezEuros = 10;
+        public const double VinteEuros = 20;
+        public const double CiquentaEuros = 50;
+        public const double CemEuros = 100;
+        public const double UmCentimo = 0.01;
+        public const double CincoCentimos = 0.05;
+        public const double DezCentimos = 0.10;
+        public const double CiquentaCentimos = 0.50;
+    };
+  
 }
-
-//R$0,01 - R$0,05 - R$0,10 - R$0,50

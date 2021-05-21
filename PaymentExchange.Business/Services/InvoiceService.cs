@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PaymentExchange.Business.Models;
 using PaymentExchange.Business.Models.Validations;
+using PaymentExchange.Business.Models.Enums;
 
 namespace PaymentExchange.Business.Services
 {
@@ -29,60 +30,68 @@ namespace PaymentExchange.Business.Services
             if (!ExecuteValidation(new InvoiceValidation(), invoice)
                ) return false;
 
-            if (_invoiceRepository.Get(f => f.Id == invoice.Id).Result.Any())
-            {
-                Notificate("There is already a invoice in our database.");
-                return false;
-            }
-
             var inputBillValue = invoice.InvoiceTotalEarnings;
 
             var inputPayment = invoice.ClientPayment;
 
-            var exchange = inputBillValue - inputPayment;
+            var exchange = inputPayment - inputBillValue;
 
 
-            var bills = new double[] { 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 5, 10, 20, 50, 100, };
-            var value = (double)exchange;
-            var breakdown =
-                bills
+            var bill = new double[] { InvoiceLineType.UmCentimo, InvoiceLineType.CincoCentimos,
+                InvoiceLineType.DezCentimos, InvoiceLineType.CiquentaCentimos,
+                InvoiceLineType.DezEuros, InvoiceLineType.VinteEuros,
+                InvoiceLineType.CiquentaEuros, InvoiceLineType.CemEuros};
+
+            var exchangevalue = (double)exchange;
+
+            invoice.TotalMoneyDeduction = (int) exchangevalue;
+
+            int soma = 0;
+
+
+
+            var filledVals =
+                bill
                     .OrderByDescending(x => x)
-                    .Aggregate(new { value, bills = new List<double>() },
+                    .Aggregate(new { exchangevalue, bills = new List<double>() },
                         (a, b) =>
                         {
-                            var v = a.value;
+                            var v = a.exchangevalue;
                             while (v >= b)
                             {
                                 a.bills.Add(b);
                                 v -= b;
                             }
-                            return new { value = v, a.bills };
+                            return new { exchangevalue = v, a.bills };
                         })
                     .bills
                     .GroupBy(x => x)
-                    .Select(x => new { Bill = x.Key, Count = x.Count() });
+                    .Select(x => new { Value = x.Key, Count = x.Count() });
 
-
-            foreach (var item in breakdown)
+            foreach (var item in filledVals)
             {
-                foreach (var invoiceLines in invoice.InvoiceLines)
+                invoice.InvoiceLines.Add(new InvoiceLine()
                 {
-                     invoiceLines.ClientDeduction = (decimal)item.Bill;
-                    invoiceLines.QuantityDeduction = item.Count;
+                    ClientDeduction = (decimal)item.Value,
+                    QuantityDeduction = item.Count,
 
-                }
-                
+                });
+
+                var count = item.Count;
+
+                soma += count;
             }
+            invoice.TotalQuantityDeduction = soma;
 
             await _invoiceRepository.Create(invoice);
             return true;
         }
 
- 
+
 
         public void Dispose()
         {
-        _invoiceRepository?.Dispose();
+            _invoiceRepository?.Dispose();
 
         }
     }

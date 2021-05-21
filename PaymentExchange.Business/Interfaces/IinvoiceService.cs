@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PaymentExchange.Business.Interfaces
 {
-    interface IinvoiceService : IDisposable
+   public interface IinvoiceService : IDisposable
     {
         Task<bool> Create(Invoice Invoice);
 

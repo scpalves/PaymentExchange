@@ -27,6 +27,11 @@ namespace PaymentExchange.Data.Context
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(MyDbContext).Assembly);
 
+            modelBuilder.Entity<Invoice>().Property(Invoices => Invoices.ClientPayment).HasPrecision(12, 10);
+            modelBuilder.Entity<Invoice>().Property(Invoices => Invoices.InvoiceTotalEarnings).HasPrecision(12, 10);
+            modelBuilder.Entity<Invoice>().Property(Invoices => Invoices.TotalMoneyDeduction).HasPrecision(12, 10);
+            modelBuilder.Entity<InvoiceLine>().Property(InvoiceLines => InvoiceLines.ClientDeduction).HasPrecision(12, 10);
+
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
             base.OnModelCreating(modelBuilder);

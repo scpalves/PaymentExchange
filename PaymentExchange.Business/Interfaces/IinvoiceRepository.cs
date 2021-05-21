@@ -10,5 +10,7 @@ namespace PaymentExchange.Business.Interfaces
    public interface IinvoiceRepository : IRepository<Invoice>
     {
     Task<Invoice> GetInvoiceById(Guid id);
-}
+   
+
+    }
 }

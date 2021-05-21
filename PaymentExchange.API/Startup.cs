@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PaymentExchange.API.Configuration;
 using PaymentExchange.Data.Context;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,8 @@ namespace PaymentExchange.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddAutoMapper(typeof(Startup));
+            services.ResolveDependencies();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -38,6 +40,8 @@ namespace PaymentExchange.API
             services.AddDbContext<MyDbContext>(options =>
             options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddIdentityConfiguration(Configuration);
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
