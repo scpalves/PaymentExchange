@@ -51,7 +51,9 @@ namespace PaymentExchange.Data.Repository
         //}
 
 
-        public async Task<Invoice> GetByName(string name)
+
+
+        public async Task<Invoice> GetInvoiceById(int id)
         {
             using (var conn = Db.Database.GetDbConnection())
             {
@@ -59,26 +61,44 @@ namespace PaymentExchange.Data.Repository
                 {
                     await conn.OpenAsync();
                 }
+                var query = @"SELECT* from Invoices where id = @id;
+                            Select * from InvoiceLines where InvoiceId = @id";
 
-                var sql = @"SELECT i.ClientName, i.TotalMoneyDeduction,i.TotalQuantityDeduction,l.ClientDeduction,l.QuantityDeduction,i.PayDate" +
-                            "FROM Invoices i " +
-                            "INNER JOIN InvoiceLines l " +
-                            "on i.Id = l.InvoiceId" +
-                            "where i.ClientName = @name" +
-                            "order by i.PayDate";
+                var results = conn.QueryMultiple(query, new { @id = id });
 
-                var result = await conn.QueryAsync<Invoice, InvoiceLine, Invoice>(sql,
-                   (c, e) =>
-                   {
-                       c.InvoiceLines = new List<InvoiceLine>();
-                       c.InvoiceLines.Add(e);
-                       return c;
-                   }, splitOn: "Id, Id");
-                //}, new { sid = name }, splitOn: "Id, Id");
+                var invoice = results.ReadSingle<Invoice>();
+                invoice.InvoiceLines = results.Read<InvoiceLine>().ToList();
 
-                return result.FirstOrDefault();
+
+                return invoice;
             }
         }
+        public async Task<Invoice> GetAllInvoice()
+        {
+            Invoice invoice = new Invoice();
+
+            using (var conn = Db.Database.GetDbConnection())
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    await conn.OpenAsync();
+                }
+                var query = @"SELECT* from Invoices;
+                            Select * from InvoiceLines";
+
+                var results = conn.QueryMultiple(query);
+
+
+                invoice = results.ReadSingle<Invoice>();
+                invoice.InvoiceLines = results.Read<InvoiceLine>().ToList();
+
+                return invoice;
+            }
+        }
+
+
+
+
 
         public async Task<Invoice> CreateEntity(Invoice invoice)
         {
@@ -89,9 +109,7 @@ namespace PaymentExchange.Data.Repository
 
                 }
             }
-
             return invoice;
-
         }
 
         //public async Task<Invoice> GetInvoiceId(int id)
@@ -102,21 +120,7 @@ namespace PaymentExchange.Data.Repository
         //}
 
 
-        public async Task<Invoice> GetInvoiceId(int id)
-        {
-            using (var conn = Db.Database.GetDbConnection())
-            {
-                if (conn.State != ConnectionState.Open)
-                {
-                    await conn.OpenAsync();
-                }
-                string query = "SELECT * FROM Invoices WHERE Id = @id";
-                var result = await conn.QueryAsync<Invoice>(
-                query, new { Id = id });
-                return result.FirstOrDefault();
 
-            }
-        }
 
     }
 }

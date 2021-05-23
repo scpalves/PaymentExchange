@@ -34,26 +34,26 @@ namespace PaymentExchange.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<InvoiceViewModel>>> GetAll()
         {
-            IEnumerable<InvoiceViewModel> invoice = _mapper.Map<IEnumerable<InvoiceViewModel>>(await _invoiceRepository.GetAll());
+            IEnumerable<InvoiceViewModel> invoice = _mapper.Map<IEnumerable<InvoiceViewModel>>(await _invoiceRepository.GetAllInvoice());
             return Ok(invoice);
         }
 
 
-        [HttpGet("byName")]
-        public async Task<ActionResult<InvoiceViewModel>> GetByName(string firstName)
-        {
-            InvoiceViewModel invoiceViewModel = _mapper.Map<InvoiceViewModel>(await _invoiceRepository.GetByName(firstName));
+        //[HttpGet("byName")]
+        //public async Task<ActionResult<InvoiceViewModel>> GetByName()
+        //{
+        //    InvoiceViewModel invoiceViewModel = _mapper.Map<InvoiceViewModel>(await _invoiceRepository.GetByAllInvoice());
 
-            if (invoiceViewModel == null) return NotFound();
+        //    if (invoiceViewModel == null) return NotFound();
 
-            return Ok(invoiceViewModel);
-        }
+        //    return Ok(invoiceViewModel);
+        //}
 
 
         [HttpGet("{id}")]
         public async Task<ActionResult<InvoiceViewModel>> GetById(int id)
         {
-            InvoiceViewModel invoiceViewModel = _mapper.Map<InvoiceViewModel>(await _invoiceRepository.GetInvoiceId(id));
+            InvoiceViewModel invoiceViewModel = _mapper.Map<InvoiceViewModel>(await _invoiceRepository.GetInvoiceById(id));
 
             if (invoiceViewModel == null) return NotFound();
 

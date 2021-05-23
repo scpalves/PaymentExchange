@@ -9,9 +9,9 @@ namespace PaymentExchange.Business.Interfaces
 {
    public interface IinvoiceRepository : IRepository<Invoice>
     {
-        Task<Invoice> GetByName(string name);
+        Task <Invoice> GetAllInvoice();
         Task<Invoice> CreateEntity(Invoice Invoice);
-        Task<Invoice> GetInvoiceId(int id);
+        Task<Invoice> GetInvoiceById(int id);
 
 
     }
