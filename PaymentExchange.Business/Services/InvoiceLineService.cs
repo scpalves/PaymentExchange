@@ -22,7 +22,6 @@ namespace PaymentExchange.Business.Services
 
         public async Task Create(InvoiceLine invoiceLine)
         {
-            if (!ExecuteValidation(new InvoiceLineValidation(), invoiceLine)) return;
 
             await _invoiceLineRepository.Create(invoiceLine);
         }

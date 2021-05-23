@@ -13,7 +13,7 @@ namespace PaymentExchange.Business.Models.Validations
         {
             RuleFor(f => f.ClientName)
                .NotEmpty().WithMessage("The field {PropertyName} must be provided")
-               .Length(2, 100)
+               .Length(3, 100)
                .WithMessage("The field {PropertyName} must be between {MinLength} and {MaxLength} characters");
         }
            

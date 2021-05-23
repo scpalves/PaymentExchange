@@ -29,18 +29,38 @@ namespace PaymentExchange.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(Startup));
-            services.ResolveDependencies();
+
             services.AddControllers();
+
+            services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(majorVersion: 1, minorVersion: 0);
+                options.ReportApiVersions = true;
+            });
+
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PaymentExchange.API", Version = "v1" });
             });
 
+            services.AddAutoMapper(typeof(Startup));
+            services.ResolveDependencies();
+
+
+
             services.AddDbContext<MyDbContext>(options =>
             options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
             //services.AddIdentityConfiguration(Configuration);
+
+      
           
         }
 

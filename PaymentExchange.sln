@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentExchange.Data", "Pay
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentExchange.API", "PaymentExchange.API\PaymentExchange.API.csproj", "{04D3FA37-6A82-4B17-9C6D-4DFFF8F50BE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentExchange.Data.Tests", "PaymentExchange.Data.Tests\PaymentExchange.Data.Tests.csproj", "{0EB94FC8-00FD-4DF5-B5A2-48A26EA97BEB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{04D3FA37-6A82-4B17-9C6D-4DFFF8F50BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04D3FA37-6A82-4B17-9C6D-4DFFF8F50BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04D3FA37-6A82-4B17-9C6D-4DFFF8F50BE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0EB94FC8-00FD-4DF5-B5A2-48A26EA97BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0EB94FC8-00FD-4DF5-B5A2-48A26EA97BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0EB94FC8-00FD-4DF5-B5A2-48A26EA97BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0EB94FC8-00FD-4DF5-B5A2-48A26EA97BEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

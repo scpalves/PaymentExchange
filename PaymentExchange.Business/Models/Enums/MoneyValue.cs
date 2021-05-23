@@ -9,6 +9,7 @@ namespace PaymentExchange.Business.Models.Enums
 
     public static class InvoiceLineType
     {
+        public const double Zero = 0;
         public const double DezEuros = 10;
         public const double VinteEuros = 20;
         public const double CiquentaEuros = 50;

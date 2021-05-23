@@ -10,8 +10,8 @@ using PaymentExchange.Data.Context;
 namespace PaymentExchange.Data.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210520113624_Initial")]
-    partial class Initial
+    [Migration("20210522193151_InicialMigration")]
+    partial class InicialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,24 +23,28 @@ namespace PaymentExchange.Data.Migrations
 
             modelBuilder.Entity("PaymentExchange.Business.Models.Invoice", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClientName")
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ClientPayment")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)");
 
                     b.Property<decimal>("InvoiceTotalEarnings")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)");
 
                     b.Property<DateTime>("PayDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("TotalMoneyDeduction")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)");
 
                     b.Property<int>("TotalQuantityDeduction")
                         .HasColumnType("int");
@@ -52,18 +56,17 @@ namespace PaymentExchange.Data.Migrations
 
             modelBuilder.Entity("PaymentExchange.Business.Models.InvoiceLine", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("ClientDeduction")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)");
 
-                    b.Property<Guid?>("InvoiceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("InvoiceLineId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("int");
 
                     b.Property<int>("QuantityDeduction")
                         .HasColumnType("int");
@@ -79,7 +82,9 @@ namespace PaymentExchange.Data.Migrations
                 {
                     b.HasOne("PaymentExchange.Business.Models.Invoice", "Invoice")
                         .WithMany("InvoiceLines")
-                        .HasForeignKey("InvoiceId");
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Invoice");
                 });

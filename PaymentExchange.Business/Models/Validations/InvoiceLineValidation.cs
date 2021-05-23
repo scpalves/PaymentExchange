@@ -11,10 +11,7 @@ namespace PaymentExchange.Business.Models.Validations
     {
         public InvoiceLineValidation()
         {
-            //RuleFor(f => f.ClientDeduction)
-            //   .NotEmpty().WithMessage("The field {PropertyName} must be provided")
-            //   .Length(2, 100)
-            //   .WithMessage("The field {PropertyName} must be between {MinLength} and {MaxLength} characters");
+
         }
 
 

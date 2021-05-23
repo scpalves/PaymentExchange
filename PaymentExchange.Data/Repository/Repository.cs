@@ -27,7 +27,7 @@ namespace PaymentExchange.Data.Repository
             return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
 
-        public virtual async Task<TEntity> GetById(Guid id)
+        public virtual async Task<TEntity> GetById(int id)
         {
             return await DbSet.FindAsync(id);
         }
@@ -40,7 +40,9 @@ namespace PaymentExchange.Data.Repository
         public virtual async Task Create(TEntity entity)
         {
             DbSet.Add(entity);
+         
             await SaveChanges();
+
         }
 
         public virtual async Task Update(TEntity entity)
@@ -49,7 +51,7 @@ namespace PaymentExchange.Data.Repository
             await SaveChanges();
         }
 
-        public virtual async Task Delete(Guid id)
+        public virtual async Task Delete(int id)
         {
             DbSet.Remove(new TEntity { Id = id });
             await SaveChanges();

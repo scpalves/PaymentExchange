@@ -15,8 +15,7 @@ namespace PaymentExchange.API.Controllers
     {
         private readonly INotificator _notificator;
 
-        protected Guid UserId { get; set; }
-        protected bool UserAuthenticated { get; set; }
+
 
         protected MainController(INotificator notificator)
         {

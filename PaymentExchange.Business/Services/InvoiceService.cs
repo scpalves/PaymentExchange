@@ -1,16 +1,9 @@
 ﻿using PaymentExchange.Business.Interfaces;
-using PaymentExchange.Business.Notifications;
-using FluentValidation;
-using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PaymentExchange.Business.Models;
-using PaymentExchange.Business.Models.Validations;
 using PaymentExchange.Business.Models.Enums;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PaymentExchange.Business.Services
 {
@@ -27,8 +20,9 @@ namespace PaymentExchange.Business.Services
 
         public async Task<bool> Create(Invoice invoice)
         {
-            if (!ExecuteValidation(new InvoiceValidation(), invoice)
-               ) return false;
+            int soma = 0;
+
+
 
             var inputBillValue = invoice.InvoiceTotalEarnings;
 
@@ -36,19 +30,14 @@ namespace PaymentExchange.Business.Services
 
             var exchange = inputPayment - inputBillValue;
 
-
-            var bill = new double[] { InvoiceLineType.UmCentimo, InvoiceLineType.CincoCentimos,
-                InvoiceLineType.DezCentimos, InvoiceLineType.CiquentaCentimos,
-                InvoiceLineType.DezEuros, InvoiceLineType.VinteEuros,
-                InvoiceLineType.CiquentaEuros, InvoiceLineType.CemEuros};
-
             var exchangevalue = (double)exchange;
 
-            invoice.TotalMoneyDeduction = (int) exchangevalue;
+            invoice.TotalMoneyDeduction = (decimal)exchangevalue;
 
-            int soma = 0;
-
-
+            var bill = new double[] {InvoiceLineType.UmCentimo,InvoiceLineType.DezEuros,
+                                     InvoiceLineType.CincoCentimos,InvoiceLineType.VinteEuros,
+                                     InvoiceLineType.DezCentimos,InvoiceLineType.CiquentaEuros,
+                                     InvoiceLineType.CiquentaCentimos,InvoiceLineType.CemEuros};
 
             var filledVals =
                 bill
@@ -68,22 +57,21 @@ namespace PaymentExchange.Business.Services
                     .GroupBy(x => x)
                     .Select(x => new { Value = x.Key, Count = x.Count() });
 
-            foreach (var item in filledVals)
-            {
-                invoice.InvoiceLines.Add(new InvoiceLine()
+                foreach (var item in filledVals)
                 {
-                    ClientDeduction = (decimal)item.Value,
-                    QuantityDeduction = item.Count,
-
-                });
+                    invoice.InvoiceLines.Add(new InvoiceLine()
+                    {
+                        ClientDeduction = (decimal)item.Value,
+                        QuantityDeduction = item.Count,
+                    });
 
                 var count = item.Count;
 
                 soma += count;
-            }
+                }
             invoice.TotalQuantityDeduction = soma;
 
-            await _invoiceRepository.Create(invoice);
+            await _invoiceRepository.CreateEntity(invoice);
             return true;
         }
 

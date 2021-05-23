@@ -9,15 +9,11 @@ namespace PaymentExchange.API.ViewModels
     public class InvoiceLineViewModel
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
-        [Required(ErrorMessage = "The field {0} is required")]
-        public Guid InvoiceLineId { get; set; }
-
-   
-        //[Required(ErrorMessage = "The field {0} is required")]
         public decimal ClientDeduction { get; set; }
 
         public int QuantityDeduction { get; set; }
+
     }
 }

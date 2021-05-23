@@ -12,7 +12,8 @@ namespace PaymentExchange.Business.Interfaces
     {
         Task Create(TEntity entity);
 
-        Task<TEntity> GetById(Guid id);
+
+        Task<TEntity> GetById(int id);
 
         Task<List<TEntity>> GetAll();
 
@@ -20,7 +21,7 @@ namespace PaymentExchange.Business.Interfaces
 
         Task Update(TEntity entity);
 
-        Task Delete(Guid id);
+        Task Delete(int id);
 
         Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>> predicate);
 

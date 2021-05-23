@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PaymentExchange.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InicialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,11 +11,12 @@ namespace PaymentExchange.Data.Migrations
                 name: "Invoices",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClientName = table.Column<string>(type: "varchar(100)", nullable: true),
-                    InvoiceTotalEarnings = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ClientPayment = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalMoneyDeduction = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClientName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InvoiceTotalEarnings = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: false),
+                    ClientPayment = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: false),
+                    TotalMoneyDeduction = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: false),
                     TotalQuantityDeduction = table.Column<int>(type: "int", nullable: false),
                     PayDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -28,11 +29,11 @@ namespace PaymentExchange.Data.Migrations
                 name: "InvoiceLines",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    InvoiceLineId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClientDeduction = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClientDeduction = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: false),
                     QuantityDeduction = table.Column<int>(type: "int", nullable: false),
-                    InvoiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    InvoiceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +43,7 @@ namespace PaymentExchange.Data.Migrations
                         column: x => x.InvoiceId,
                         principalTable: "Invoices",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

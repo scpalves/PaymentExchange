@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 
 namespace PaymentExchange.API.Controllers
 {
-    [Route("api/invoice")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class InvoiceController : MainController
     {
@@ -38,10 +39,10 @@ namespace PaymentExchange.API.Controllers
         }
 
 
-        [HttpGet("{id:guid}")]
-        public async Task<ActionResult<InvoiceViewModel>> GetById(Guid id)
+        [HttpGet("byName")]
+        public async Task<ActionResult<InvoiceViewModel>> GetByName(string firstName)
         {
-            InvoiceViewModel invoiceViewModel = _mapper.Map<InvoiceViewModel>(await _invoiceRepository.GetInvoiceById(id));
+            InvoiceViewModel invoiceViewModel = _mapper.Map<InvoiceViewModel>(await _invoiceRepository.GetByName(firstName));
 
             if (invoiceViewModel == null) return NotFound();
 
@@ -49,7 +50,19 @@ namespace PaymentExchange.API.Controllers
         }
 
 
-        //[ClaimsAuthorize("Supplier", "Add")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<InvoiceViewModel>> GetById(int id)
+        {
+            InvoiceViewModel invoiceViewModel = _mapper.Map<InvoiceViewModel>(await _invoiceRepository.GetInvoiceId(id));
+
+            if (invoiceViewModel == null) return NotFound();
+
+            return Ok(invoiceViewModel);
+        }
+
+
+
+
         [HttpPost]
         public async Task<ActionResult<InvoiceViewModel>> Add(InvoiceViewModel invoiceViewModel)
         {
@@ -57,7 +70,7 @@ namespace PaymentExchange.API.Controllers
 
             await _invoiceService.Create(_mapper.Map<Invoice>(invoiceViewModel));
 
-            //Here i am not passing our <Supplier> supplier object to prevent our Business layer exposion
+
             return CustomResponse(invoiceViewModel);
         }
 

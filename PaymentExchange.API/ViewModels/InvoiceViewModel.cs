@@ -9,10 +9,7 @@ namespace PaymentExchange.API.ViewModels
     public class InvoiceViewModel
     {
         [Key]
-        public Guid Id { get; set; }
-
-        [Required(ErrorMessage = "The field {0} is required")]
-        [StringLength(10, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 2)]
+        public int Id { get; set; }
         public string ClientName { get; set; }
         public decimal InvoiceTotalEarnings { get; set; }
         public decimal ClientPayment { get; set; }
