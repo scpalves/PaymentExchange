@@ -17,8 +17,6 @@ namespace PaymentExchange.Business.Interfaces
 
         Task<List<TEntity>> GetAll();
 
-        //IEnumerable<TEntity> GetAll();
-
         Task Update(TEntity entity);
 
         Task Delete(int id);

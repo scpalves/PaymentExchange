@@ -13,6 +13,5 @@ namespace PaymentExchange.Business.Interfaces
         Task<Invoice> CreateEntity(Invoice Invoice);
         Task<Invoice> GetInvoiceById(int id);
 
-
     }
 }

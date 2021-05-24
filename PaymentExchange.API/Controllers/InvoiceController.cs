@@ -39,17 +39,6 @@ namespace PaymentExchange.API.Controllers
         }
 
 
-        //[HttpGet("byName")]
-        //public async Task<ActionResult<InvoiceViewModel>> GetByName()
-        //{
-        //    InvoiceViewModel invoiceViewModel = _mapper.Map<InvoiceViewModel>(await _invoiceRepository.GetByAllInvoice());
-
-        //    if (invoiceViewModel == null) return NotFound();
-
-        //    return Ok(invoiceViewModel);
-        //}
-
-
         [HttpGet("{id}")]
         public async Task<ActionResult<InvoiceViewModel>> GetById(int id)
         {
@@ -69,7 +58,6 @@ namespace PaymentExchange.API.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             await _invoiceService.Create(_mapper.Map<Invoice>(invoiceViewModel));
-
 
             return CustomResponse(invoiceViewModel);
         }
