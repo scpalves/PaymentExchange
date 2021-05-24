@@ -15,10 +15,6 @@ namespace PaymentExchange.API.Configuration
             CreateMap<Invoice, InvoiceViewModel>().ReverseMap();
 
             CreateMap<InvoiceLineViewModel, InvoiceLine>().ReverseMap();
-
-            //CreateMap<InvoiceLine, InvoiceLineViewModel>();
-
-
         }
     }
 }

@@ -9,6 +9,7 @@ namespace PaymentExchange.API.ViewModels
     public class InvoiceLineViewModel
     {
         [Key]
+  
         public int Id { get; set; }
 
         public decimal ClientDeduction { get; set; }

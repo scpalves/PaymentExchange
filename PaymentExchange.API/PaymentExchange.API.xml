@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PaymentExchange.API</name>
+    </assembly>
+    <members>
+        <member name="M:PaymentExchange.API.Controllers.InvoiceController.Add(PaymentExchange.API.ViewModels.InvoiceViewModel)">
+             <summary> 
+             Post Operation Step- Information for the tests
+             </summary> 
+             <remarks> 
+             The tests should be made with example Schema as you can see in below:  
+             Only three fields have to be insert manually with information
+             "clientName": "string",     -Insert the name of the client
+             "invoiceTotalEarnings": 0,  -Insert the Bill value
+             "clientPayment": 0,         -Insert the cliente Bill value payment (This value have to be bigger than previous Bill value field
+             To get the exchange value, calculated by aplication. all other fields are calculated fields by program
+             
+             POST / Todo 
+               {
+            
+             "clientName": "string",
+             "invoiceTotalEarnings": 0,
+             "clientPayment": 0,
+             "invoiceLines": [
+             { }
+            ]
+            }
+                  
+             </remarks>
+        </member>
+    </members>
+</doc>

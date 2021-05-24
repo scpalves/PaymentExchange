@@ -14,8 +14,7 @@ namespace PaymentExchange.Data.Mappings
         public void Configure(EntityTypeBuilder<Invoice> builder)
         {
 
-            //builder.Property(p => p.ClientName)
-            //    .IsRequired()
+    
             //    .HasColumnType("varchar(200)");
 
 

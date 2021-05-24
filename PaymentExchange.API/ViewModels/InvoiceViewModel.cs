@@ -10,8 +10,11 @@ namespace PaymentExchange.API.ViewModels
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string ClientName { get; set; }
+        [Required]
         public decimal InvoiceTotalEarnings { get; set; }
+        [Required]
         public decimal ClientPayment { get; set; }
 
         public decimal TotalMoneyDeduction { get; set; }

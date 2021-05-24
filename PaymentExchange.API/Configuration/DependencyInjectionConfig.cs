@@ -24,10 +24,7 @@ namespace PaymentExchange.API.Configuration
             services.AddScoped<IinvoiceLineRepository, InvoiceLineRepository>();
             services.AddScoped<IinvoiceLineService, InvoiceLineService>();
             services.AddScoped<INotificator, Notificator>();
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            //services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             return services;
         }

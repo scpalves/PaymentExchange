@@ -57,7 +57,7 @@ namespace PaymentExchange.Features.Tests
 
             // Assert 
             // Assert.True(invoice);
-            //Assert.False(clientes.Count(c => !c.Ativo) > 0);
+            //Assert.False(invoice.Count(c => !c.Ativo) > 0);
         }
 
         [Fact(DisplayName = "Get Invoices By Id")]
@@ -80,7 +80,7 @@ namespace PaymentExchange.Features.Tests
 
             // Assert 
             // Assert.True(invoice);
-            //Assert.False(clientes.Count(c => !c.Ativo) > 0);
+            //Assert.False(invoice.Count(c => !c.Ativo) > 0);
         }
     }
 

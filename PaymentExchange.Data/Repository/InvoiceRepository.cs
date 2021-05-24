@@ -57,7 +57,7 @@ namespace PaymentExchange.Data.Repository
                 string queryString = "SELECT l.QuantityDeduction, * FROM Invoices i  " +
                   "INNER JOIN InvoiceLines l " +
                       "on i.Id = l.InvoiceId " +
-                  "order by i.PayDate";
+                  "order by  i.PayDate";
 
                 var invoiceDictionary = new Dictionary<int, Invoice>();
 
