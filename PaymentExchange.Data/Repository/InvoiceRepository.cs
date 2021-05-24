@@ -73,9 +73,9 @@ namespace PaymentExchange.Data.Repository
                 return invoice;
             }
         }
-        public async Task<Invoice> GetAllInvoice()
+        public async Task<List<Invoice>> GetAllInvoice()
         {
-            Invoice invoice = new Invoice();
+            List<Invoice> invoices = new List<Invoice>();
 
             using (var conn = Db.Database.GetDbConnection())
             {
@@ -83,20 +83,38 @@ namespace PaymentExchange.Data.Repository
                 {
                     await conn.OpenAsync();
                 }
-                var query = @"SELECT* from Invoices;
-                            Select * from InvoiceLines";
+                string sQuery = "SELECT l.QuantityDeduction, * FROM Invoices i  " +
+                  "INNER JOIN InvoiceLines l " +
+                      "on i.Id = l.InvoiceId " +
+                  "order by i.PayDate";
 
-                var results = conn.QueryMultiple(query);
+                var invoiceDictionary = new Dictionary<int, Invoice>();
 
 
-                invoice = results.ReadSingle<Invoice>();
-                invoice.InvoiceLines = results.Read<InvoiceLine>().ToList();
+                var listInvoice = conn.Query<Invoice, InvoiceLine, Invoice>(
+                    sQuery,
+                    (invoice, invoiceLine) =>
+                    {
+                        Invoice invoiceEntry;
 
-                return invoice;
+                        if (!invoiceDictionary.TryGetValue(invoice.Id, out invoiceEntry))
+                        {
+                            invoiceEntry = invoice;
+                            invoiceEntry.InvoiceLines = new List<InvoiceLine>();
+                            invoiceDictionary.Add(invoiceEntry.Id, invoiceEntry);
+                        }
+
+                        invoiceEntry.InvoiceLines.Add(invoiceLine);
+                        return invoiceEntry;
+                    },
+                    splitOn: "Id")
+                .Distinct()
+                .ToList();
+
+                invoices = listInvoice;
             }
+            return invoices;
         }
-
-
 
 
 

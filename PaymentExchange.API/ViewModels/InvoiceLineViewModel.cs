@@ -15,5 +15,6 @@ namespace PaymentExchange.API.ViewModels
 
         public int QuantityDeduction { get; set; }
 
+        public int InvoiceId { get; set; }
     }
 }
