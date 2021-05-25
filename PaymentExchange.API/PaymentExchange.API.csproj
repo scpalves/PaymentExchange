@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\rui.alves\source\repos\PaymentExchange\PaymentExchange.API\PaymentExchange.API.xml</DocumentationFile>
-    <NoWarn>1701;1702,1591</NoWarn>
+    <DocumentationFile></DocumentationFile>
+    <NoWarn>1701;1702</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
