@@ -9,7 +9,7 @@ namespace PaymentExchange.Business.Interfaces
 {
    public interface IinvoiceService : IDisposable
     {
-        Task<bool> Create(Invoice Invoice);
+        Task  Create(Invoice Invoice);
 
 
 

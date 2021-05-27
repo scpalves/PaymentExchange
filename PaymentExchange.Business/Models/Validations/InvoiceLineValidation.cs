@@ -12,6 +12,13 @@ namespace PaymentExchange.Business.Models.Validations
         public InvoiceLineValidation()
         {
 
+            RuleFor(c => c.ClientDeduction)
+            .Equal(0).WithMessage("The field {PropertyName} must be between equal then {ComparisonValue}");
+
+            RuleFor(c => c.QuantityDeduction)
+                .Equal(0).WithMessage("The field {PropertyName} must be between equal then {ComparisonValue}");
+
+
         }
 
 

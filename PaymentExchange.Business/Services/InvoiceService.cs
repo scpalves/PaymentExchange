@@ -2,6 +2,7 @@
 using PaymentExchange.Business.Interfaces;
 using PaymentExchange.Business.Models;
 using PaymentExchange.Business.Models.Enums;
+using PaymentExchange.Business.Models.Validations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,12 +20,13 @@ namespace PaymentExchange.Business.Services
 
         }
 
-        public async Task<bool> Create(Invoice invoice)
+        public async Task Create(Invoice invoice)
         {
+            if (!ExecuteValidation(new InvoiceValidation(), invoice)) return;
             InvoiceBusiness.InvoiceBusinessRule(invoice);
 
             await _invoiceRepository.CreateEntity(invoice);
-            return true;
+
         }
 
 
